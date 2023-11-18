@@ -1,0 +1,261 @@
+.game-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+  }
+  
+#game-title {
+  font-size: 64px; /* Replace with the size you want */
+  /* You can also add other font properties here if needed */
+  font-weight: bold; /* Makes the font bold */
+  text-align: center; /* Centers the title if not already centered */
+  margin-top: 20px; /* Adjusts the space above the title */
+  margin-bottom: 10px; /* Adjusts the space below the title */
+  /* Add other styling as desired */
+}
+
+.hand {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 60px; /* This sets a consistent gap between all flex items */
+  margin-top: 50px; /* Adjust as needed to position correctly below the title */
+}
+
+/* Base class for all card types */
+.card-base {
+  position: relative;
+  width: 100px;
+  height: 140px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+  font-size: 46px;
+  text-align: center;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.card.face-up {
+  /* styles for face-up cards */
+  background-color: #fff; /* white background */
+}
+
+.face-down {
+  /* Apply the checkerboard pattern */
+  background-image:
+    linear-gradient(45deg, #ccc 25%, transparent 25%),
+    linear-gradient(-45deg, #ccc 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ccc 75%),
+    linear-gradient(-45deg, transparent 75%, #ccc 75%);
+  background-size: 20px 20px; /* Size of the squares */
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px; /* Positioning of the pattern */
+  border: 1px solid #000; /* Border for the card */
+  border-radius: 10px; /* Rounded corners for the card */
+  position: relative; /* Allows absolute positioning of elements inside */
+  /* Additional styles for positioning and appearance */
+}
+
+/* For face-down cards, we don't display the small letters in the corners */
+.card.face-down::before, .card.face-down::after {
+  display: none;
+}
+
+/* We still display the main letter for a face-down card */
+.card.face-down > span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 46px; /* Large font size for the center letter */
+  color: #000; /* Color of the letter, adjust if needed */
+}
+
+.card-stack {
+	display: inline-block;
+	position: relative;
+	width: 100px;
+	height: 140px;
+	margin: 0 5px;	
+}
+
+/* Styles for the card stack */
+.card-stack .stacked {
+	  position: absolute;
+	  width: 100%; /* This will be equivalent to 100px as set by the .card-stack */
+	  height: 100%; /* This will be equivalent to 140px as set by the .card-stack */
+}
+	
+.card-stack .stacked::before, .card-stack .stacked::after {
+  content: attr(data-letter);
+  position: absolute;
+  font-size: 14px; /* Smaller font size for corner letters */
+}
+
+.card-stack .stacked::before {
+  top: 5px;
+  left: 5px;
+}
+
+.card-stack .stacked::after {
+  bottom: 5px;
+  right: 5px;
+  transform: rotate(180deg); /* Rotate the bottom letter */
+}
+
+.card-stack .stacked > span {
+  font-family: 'Elephant', sans-serif; /* Replace 'YourFontName' with the actual font name */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: normal;
+}	
+
+/* Container for the card stack and the text below it */
+.card-stack-container {
+  display: flex; /* Use flex to allow for vertical stacking */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+  margin: 0 5px; /* Provide necessary margins */
+}
+
+.stack-text {
+  text-align: center;
+  margin-top: 15px; /* Adjust as needed */
+  font-size: 0.8em; /* Adjust as needed */
+}
+
+	/* Styles for the individual cards */
+	.card {
+	  display: inline-block;
+	  margin: 0 5px;
+	}
+	
+  .card::before, .card::after {
+    content: attr(data-letter);
+    position: absolute;
+    font-size: 14px; /* Smaller font size for corner letters */
+  }
+  .card::before {
+    top: 5px;
+    left: 5px;
+  }
+  .card::after {
+    bottom: 5px;
+    right: 5px;
+    transform: rotate(180deg); /* Rotate the bottom letter */
+  }
+  .card > span {
+    font-family: 'Elephant', sans-serif; /* Replace 'YourFontName' with the actual font name */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: normal;
+  }
+
+/* Special styles for the discard card */
+.card.discard {
+  width: 110px;
+  height: 80px; /* Match the line-height to this height */
+  font-size: 18px; /* Adjust size as needed to fill the card */
+  text-align: center;
+  line-height: 80px; /* Updated line height to vertically center the text */
+  align-self: center; /* This will vertically center the discard card within the .card-container */
+}
+
+.card.discard > span {
+    font-family: Arial, sans-serif; /* Replace 'YourFontName' with the actual font name */
+}
+	
+/* Remove the before and after pseudo-elements for the discard card */
+.card.discard::before,
+.card.discard::after {
+  content: none;
+}
+
+.card-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* This centers the cards horizontally, if needed */
+  position: relative;
+  /* Do not set margin-right here if using gap on the flex container */
+  /* margin-right: 30px; */ /* Adjust this value to create gaps between card sections */
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the top by default */
+}
+
+.card-stack,
+.card,
+.discard {
+  margin-bottom: 10px; /* Space below each card for the bet button */
+}
+
+
+/* Bet Button Styles */
+.bet-button {
+  display: block; /* Makes the button a block element */
+  margin: 10px auto; /* Centers the button and adds space above and below */
+  position: absolute;
+  bottom: -40px; /* Adjust this value so the button appears below the cards */
+  right: -30px; /* Positions the button to the far right of the cards */  
+  width: 40px; /* Diameter of the chip */
+  height: 40px; /* Diameter of the chip */
+  border: 2px solid #000; /* Adds a black border */
+  border-radius: 50%; /* Makes the chip round */
+  background-color: #fff; /* White chip color */
+  text-align: center;
+  line-height: 38px; /* Centers text vertically, adjusted for border */
+  color: #000; /* Black text color */
+  margin: 0 auto; /* Centers the button horizontally */
+  box-shadow: 0 4px 0 #888; /* Subtle shadow for depth */
+  margin-top: 0; /* Removes top margin */
+  margin-bottom: 10px; /* Adds space below the button if needed */  
+}
+
+/* Stack additional chips using pseudo-elements */
+.bet-button::before,
+.bet-button::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 40px; /* Match the diameter of the chip */
+  height: 40px; /* Match the diameter of the chip */
+  border: 2px solid #000; /* Black border for distinction */
+  border-radius: 50%; /* Makes it round */
+  background-color: #fff; /* White chip color */
+  z-index: -1;
+  box-shadow: 0 4px 0 #888; /* Subtle shadow for depth */
+}
+
+.bet-button::before {
+  top: -6px; /* Adjust the position to show the stack, accounting for border */
+}
+
+.bet-button::after {
+  top: -12px; /* Adjust the position to show a taller stack */
+  left: 12px;
+  z-index: -2; /* Ensure this chip is below the before pseudo-element */
+}
+
+/* Specific styles for SB and BB bets */
+.bet-button.sb { /* SB has two chips */
+  z-index: 2;
+}
+
+.bet-button.bb::after { /* BB has three chips */
+  top: -8px; /* Show a third chip in the stack, accounting for border */
+  left: 6px;
+  z-index: -3; /* Ensure this chip is below both the button and the before pseudo-element */
+}
+
+.final-hand {
+  text-align: center;
+  margin-top: 50px; /* Adjust as needed to position correctly below the last set of bet buttons */
+  font-size: 20pt; /* Smaller font size for corner letters */
+}
